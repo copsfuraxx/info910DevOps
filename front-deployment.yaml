@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front
+  labels:
+    app: V-Books
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app:  V-Books
+      tier: frontend
+      track: stable
+  template:
+    metadata:
+      labels:
+        app:  V-Books
+        tier: frontend
+        track: stable
+    spec:
+      containers:
+        - name: front
+          image: copsfuraxx/devops:front
+          imagePullPolicy: Always
+          ports:
+            -  containerPort: 80

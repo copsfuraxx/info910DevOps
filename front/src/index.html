@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <title>V-Books</title>
+</head>
+<body>
+    <h1>V-Books</h1>
+    <h2>Livres :</h2>
+    <div id="livres">
+        
+    </div>
+</body>
+<script>
+    fetchLivres();
+
+    function fetchLivres() {
+        const base_url = window.location.origin;
+        let request = new XMLHttpRequest();
+        request.open('GET', base_url + '/api/livres');
+        request.send();
+        request.onload = () => {
+            console.log(request);
+            if (request.status == 200) {
+                const livres = JSON.parse(request.response);
+                let livresDiv = document.getElementById('livres');
+                livres.forEach(element => {
+                    livresDiv.innerHTML += newLivre(element.titre, element.auteur);
+                });
+            } else {
+                console.log(request.status, request.statusText);
+            }
+        }
+    }
+
+    function newLivre(titre, auteur) {
+        return `<div class="livre">Titre: <span id="titre">${titre}</span> | auteur: <span id="auteur">${auteur}</span></div>`;
+    }
+</script>
+</html>
